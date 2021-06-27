@@ -146,8 +146,8 @@ function sendFiles(srcFilePath,dst,category)
 
 const helpFn=()=>
 {
-    console.log(`1.. Type imran tree to get the tree structure of any directory`);
-    console.log(`2.. Type imran organize to organize the content of any directory`);
+    console.log(`1.. Type "imran tree" to get the tree structure of any directory`);
+    console.log(`2.. Type "imran organize" to organize the content of any directory`);
 }
 
 const inputArr=process.argv.slice(2);
