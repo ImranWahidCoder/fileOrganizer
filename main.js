@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 const fs=require("fs");
 const path=require("path");
+
+// Known files types are categorized into following categories
 const types=
 {
-    media:["mp4","mkv"],
+    video:["mp4","mkv"],
+    audio:["mp3","wav","aif","mid"],
     archives:["zip","rar","tar","7z","gz","ar","iso","xz"],
     documents:["docx","doc","pdf","xlsx","xls","odt","ods","odp","odg","odf","txt","ps","tex"],
     app:["exe","dmg","pkg","deb"],
@@ -14,33 +17,47 @@ const types=
 
 const treeFn=(directoryPath)=>
 {
+    // if no directory path is provided work on the current directory
     if(directoryPath==undefined)
     {
         directoryPath=process.cwd();
     }
+    // if the directory given, is valid then process it further
     if(fs.existsSync(directoryPath))
     {
         treeHelper(directoryPath,"");
     }
+    // if the directory provided by the user doesn't exist then ask him/her to provide a valid one.
     else
     {
         console.log("Please provide a valid path");
     }
 }
 
+// helper function to give the tree like structure to the directory  
 function treeHelper(directoryPath,indent)
 {
+    // using lstat check whether the content that we are processing is a file or a folder/directory
     const isFile=fs.lstatSync(directoryPath).isFile();
+
+    // if the content is a file then just print it to the console
     if(isFile)
     {
         const fileName=path.basename(directoryPath);
         console.log(indent+" |---> "+fileName);
     }
+
+    // if the content is a folder/directory then recursively visit all the content of the folder and print in the console
     else
     {
+        // first print the name of the directory 
         const dirName=path.basename(directoryPath);
         console.log(indent+" |____ "+dirName);
+
+        // then get all the children of the directory 
         let childNames=fs.readdirSync(directoryPath);
+
+        // treverse through all the children and trigger the recursive call to visit them
         for(let i=0;i<childNames.length;i++)
         {
             let childPath=path.join(directoryPath,childNames[i]);
@@ -121,7 +138,7 @@ function getCategory(name)
     // if the file extension doesn't match with any category then return a default category "others"
     return "others";
 }
-
+// The following function will cut the files from the source directory and move them to destination directory
 function sendFiles(srcFilePath,dst,category)
 {
     const categoryPath=path.join(dst,`/${category}`);
@@ -144,7 +161,7 @@ function sendFiles(srcFilePath,dst,category)
     console.log(fileName+" has been organized successfully");
 }
 
-
+// The following help function is for giving details about the commands
 const helpFn=()=>
 {
     console.log(`1.. Type "imran tree" to get the tree structure of any directory`);
