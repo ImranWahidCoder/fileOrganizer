@@ -168,6 +168,7 @@ const helpFn=()=>
     console.log(`2.. Type "imran organize" to organize the content of any directory`);
 }
 
+// take the input from the user
 const inputArr=process.argv.slice(2);
 switch(inputArr[0])
 {
