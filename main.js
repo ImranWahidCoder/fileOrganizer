@@ -11,7 +11,8 @@ const types=
     documents:["docx","doc","pdf","xlsx","xls","odt","ods","odp","odg","odf","txt","ps","tex"],
     app:["exe","dmg","pkg","deb"],
     images:["png","jpg","gif","webp"],
-    code:["cpp","java","py","c","r","js","html","css","scss"],
+    code:["cpp","java","py","c","r"],
+    webScripts:["html","css","js","scss"],
     json:["json"]
 }
 
